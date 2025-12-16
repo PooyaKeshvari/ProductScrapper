@@ -1,0 +1,39 @@
+@model IEnumerable<PriceMonitor.Models.ScrapeRun>
+@{
+    ViewData["Title"] = "Scrape Runs";
+}
+<h2>Scrape Runs</h2>
+<table class="table table-striped table-sm">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Website</th>
+            <th>Started</th>
+            <th>Completed</th>
+            <th>Status</th>
+            <th>Error</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var run in Model)
+    {
+        <tr>
+            <td>@run.Product?.Name</td>
+            <td>@run.Website</td>
+            <td>@run.StartedAt.ToLocalTime()</td>
+            <td>@run.CompletedAt?.ToLocalTime()</td>
+            <td>
+                @if (run.Success)
+                {
+                    <span class="badge bg-success">Success</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Failed</span>
+                }
+            </td>
+            <td>@run.ErrorMessage</td>
+        </tr>
+    }
+    </tbody>
+</table>

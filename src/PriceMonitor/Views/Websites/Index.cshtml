@@ -1,0 +1,29 @@
+@model IEnumerable<PriceMonitor.Settings.WebsiteRule>
+@{
+    ViewData["Title"] = "Websites";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Website Rules</h2>
+    <a class="btn btn-primary" asp-action="Edit">Edit JSON</a>
+</div>
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Base URL</th>
+            <th>Delay (ms)</th>
+            <th>Enabled</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var site in Model)
+    {
+        <tr>
+            <td>@site.Name</td>
+            <td>@site.BaseUrl</td>
+            <td>@(site.RequestDelayMs ?? 0)</td>
+            <td>@site.Enabled</td>
+        </tr>
+    }
+    </tbody>
+</table>
