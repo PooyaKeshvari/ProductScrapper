@@ -1,0 +1,68 @@
+@model PriceMonitor.Models.Product
+@{
+    ViewData["Title"] = "Product Details";
+    var ranking = ViewBag.Ranking as PriceMonitor.Services.Pricing.PriceRanking;
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>@Model.Name</h2>
+        <p class="text-muted">@Model.Brand | @Model.Sku</p>
+    </div>
+    <div>
+        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-muted">Internal Price</div>
+                <h4>@Model.InternalPrice?.ToString("N0")</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-muted">Market Average</div>
+                <h4>@ranking?.MarketAverage?.ToString("N0")</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-muted">Ranking Position</div>
+                <h4>@ranking?.Position</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<form asp-controller="Scrape" asp-action="Run" method="post">
+    <input type="hidden" name="productId" value="@Model.Id" />
+    <button type="submit" class="btn btn-success mb-3">Run scrape now</button>
+</form>
+<h4>Latest Prices</h4>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Website</th>
+            <th>Price</th>
+            <th>Currency</th>
+            <th>Confidence</th>
+            <th>Retrieved</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var price in Model.Prices.OrderByDescending(p => p.RetrievedAt).Take(20))
+    {
+        <tr>
+            <td>@price.Website</td>
+            <td>@price.Price.ToString("N0")</td>
+            <td>@price.Currency</td>
+            <td>@price.Confidence.ToString("P0")</td>
+            <td>@price.RetrievedAt.ToLocalTime()</td>
+        </tr>
+    }
+    </tbody>
+</table>

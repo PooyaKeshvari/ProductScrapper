@@ -1,0 +1,13 @@
+@model string
+@{
+    ViewData["Title"] = "Edit Configuration";
+}
+<h2>Edit Scraper Settings</h2>
+<p>Modify the JSON configuration to adjust website rules at runtime. The content will be saved to <code>appsettings.runtime.json</code>.</p>
+<form asp-action="Edit" method="post">
+    <div class="mb-3">
+        <textarea name="rawJson" class="form-control" rows="20">@Model</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
