@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="row text-center">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3>@ViewBag.ProductCount</h3>
+                <p class="text-muted">Products</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3>@ViewBag.PriceCount</h3>
+                <p class="text-muted">Price records</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3>@ViewBag.RunCount</h3>
+                <p class="text-muted">Scrape runs</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="alert alert-info">Use the navigation above to manage products, run scrapers, and view results.</div>
